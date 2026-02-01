@@ -327,7 +327,7 @@ footer {
 }
 .back-btn:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(193, 0, 45, 0.4);
+    box-shadow: 0 0 0 2px rgba(193, 0, 45, 0.853);
     background-color: var(--light);
 }
 
@@ -416,7 +416,7 @@ figure.details-img img {
 }
 .browse-btn:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(193, 0, 45, 0.5);
+    box-shadow: 0 0 0 2px rgba(193, 0, 45, 0.853);
 }
 
 /* =================================== */
