@@ -1,0 +1,440 @@
+/* Variables for consistency across the site*/
+:root {
+    --dark: #222;
+    --light: #f4f4f4;
+    --card: #f9f9f9;
+    --button: #c1002d;
+    --navigation: #124574;
+    --footer: #D1A655;
+    --border: #dddddd;
+    --darkBorder: #444444;
+
+    /* Transition for smooth hover effect */
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ================================================================================== */
+/* Base Styles */
+/* ================================================================================== */
+body {
+    font-family: Tahoma, 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    margin: 0;          /* Remove default margin */
+    background-color: var(--light);
+    color: var(--dark);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+/* To ensure that images don't overflow their container and behave like blocks */
+img{
+    max-width: 100%;
+    height: auto;
+    display: block; /* This would removes the small whitespace gap under images */
+}
+
+/* ================================================================================== */
+/* Header & Nav bar */
+/* ================================================================================== */
+header {
+    position: relative;
+    background-color: var(--navigation);
+    padding: 1rem;
+    border-bottom: 5px solid var(--footer);
+}
+header img {
+    width: auto;
+    height: 5rem;
+}
+
+/* This flexbox is used to align Logo and Navigation Links horizontally */
+header nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* This pushes the navigation links to right */
+header ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 1rem;
+    margin-left: auto;
+}
+header h1 {
+    color: white;
+}
+header a {
+    text-decoration: none;
+    color: white;
+}
+
+/* ================================================================================== */
+/* Navigation Menu */
+/* ================================================================================== */
+
+/* Here I'm hiding the actual checkbox but still using the 'checked' state to toggle the menu */
+.menu-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+.menu-button {
+    display: none;
+    cursor: pointer;
+}
+.menu-button img {
+    display: block;
+    width: auto;
+    height: 2rem;
+}
+
+/* Media Query to detect mobile devices screens (Tablets and smaller) */
+@media (max-width: 768px) {
+    .menu-button {
+        display: block;
+        margin-left: auto;
+    }
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--navigation);
+        z-index: 1000;
+
+        /* Dropdown animation properties */
+        max-height: 0;      /* Menu drops down from height: 0 */
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out, padding 0.3s ease;
+        padding: 0 1rem;
+    }
+
+    /* When checkbox is checked, the menu will be visible */
+    .menu-checkbox:checked ~ .nav-links {
+        max-height: 18.75rem;
+        padding: 1rem;
+        border-top: 5px solid var(--footer);
+    }
+
+    /* Accessibility focus state for keyboard users */
+    .menu-checkbox:focus-visible + .menu-button {
+        outline: 2px solid var(--button);
+        border-radius: 4px;
+    }
+}
+
+/* ================================================================================== */
+/* Gallery Book Cards*/
+/* ================================================================================== */
+
+.card-container {
+    margin-top: 2.5rem;
+}
+
+.book-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;               /* Ensures images don't spill out of rounded corners */
+    background-color: var(--card);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.book-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: var(--transition);
+    object-fit: cover;
+}
+
+.book-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    display: -webkit-box;           /* This enables line clamping. This is necessary because some titles are too long for the card */
+    -webkit-box-orient: vertical;   /* Sets the box orientation to vertical */
+    line-clamp: 2;                  /* Limits title to 2 lines */
+    overflow: hidden;               /* Hides overflowed text */
+}
+
+.card-details {
+    padding: 1rem;
+    font-size: 0.875rem;
+}
+.card-details h4 {
+    font-size: 1.25rem;
+}
+
+/* ================================================================================== */
+/* Overlay & Animation */
+/* ================================================================================== */
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.see-more-btn {
+    background: var(--button);
+    color: white;
+    padding: 0.75rem 1.25rem;
+    width: 80%;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 0.25rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.see-more-btn .arrow {
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+/* Button Hover State */
+.see-more-btn:hover {
+    background-color: #a00025;
+    transform: scale(1.05);
+    box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.3);
+}
+
+.see-more-btn:hover .arrow {
+    transform: translateX(0.35rem);     /* Moves arrow to the right */
+}
+
+/* Triggers the overlay on Hover or Keyboard Focus */
+.book-card:hover .overlay,
+.book-card:focus-within .overlay {
+    opacity: 1;
+}
+
+.book-card:hover .see-more-btn,
+.book-card:focus-within .see-more-btn {
+    animation: fadeInUp 0.4s forwards;
+}
+
+/* Custom made keyframe animations for Slide up and fade in */
+@keyframes fadeInUp {
+    to {
+        .see-more-btn {
+            transform: translateY(1.25rem);
+            opacity: 1;
+        }
+    }
+}
+
+/* ================================================================================== */
+/* Reduced Motion Support */
+/* ================================================================================== */
+
+/* In case the users have their settings for animations in their OS disabled */
+@media (prefers-reduced-motion: reduce) {
+    /* This forces all animations and transitions to happen instantly */
+    * {
+        animation-duration: 0.01ms !important;      
+        transition-duration: 0.01ms !important;
+    }
+    /* Makes the button remain visible and in place even without the animation */
+    .see-more-btn {
+        transform: none !important;
+        opacity: 1 !important;
+    }
+}
+
+/* ================================================================================== */
+/* About Section */
+/* ================================================================================== */
+
+#about-site {
+    margin-top: 3rem;
+    padding: 1rem;
+}
+.about-content {
+    background-color: var(--border);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+}
+.about-content h4 {
+    margin-block: 1rem;
+    position: relative;
+    display: inline-block;
+}
+
+/* ================================================================================== */
+/* Footer */
+/* ================================================================================== */
+
+footer {
+    margin-top: 1rem;
+    padding: 1rem 0rem;
+    background-color: var(--footer);
+    color: var(--light);
+    text-align: center;
+}
+
+/* ================================================================================== */
+/* Book Details Page */
+/* ================================================================================== */
+
+.breadcrumb-nav {
+    margin-block: 2rem;
+}
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    gap: 0.5rem;
+    font-weight: bold;
+    background-color: transparent;
+    color: var(--dark);
+    border: 2px solid var(--border);
+    border-radius: 3rem;
+    text-decoration: none;
+    transition: var(--transition);
+}
+.back-btn .arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+.back-btn:hover {
+    background-color: var(--button);
+    color: white;
+    border-color: var(--button);
+}
+.back-btn:hover .arrow {
+    transform: translateX(-0.25rem);    /* Moves arrow to the left */
+}
+.back-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(193, 0, 45, 0.4);
+    background-color: var(--light);
+}
+
+/* Book Image & Overview */
+.book-container {
+    margin-top: 2rem;
+}
+.overview-fig img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+figure.details-img {
+    margin-bottom: 1rem;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 0.5rem;
+}
+figure.details-img img {
+    width: 100%;
+    display: block;
+}
+
+.overview-section {
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    background-color: transparent;
+}
+
+.overview-section table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+
+.details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+}
+
+.details-table th,
+.details-table td {
+    border-bottom: 1px solid var(--border); 
+    padding: 0.75rem 0;
+    text-align: left;
+}
+
+.details-table td:first-child {
+    width: 35%;
+    font-weight: bold;
+    padding-inline: 1rem;
+}
+
+.details-table table td:last-child {
+    padding-inline: 1rem;
+}
+
+/* Removes the border from the very last row for a cleaner look */
+.details-table table tr:last-child td {
+    border-bottom: none;
+}
+
+.browse-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    background-color: var(--button);
+    color: white;
+    margin-top: 2rem;
+    padding: 0.75rem 2rem;
+    text-decoration: none;
+    border-radius: 0.25rem;
+    border: 2px solid var(--border);
+    transition: all 0.3s ease;
+}
+.browse-btn:hover {
+    background-color: var(--button);
+    border-color: var(--button);
+}
+.browse-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(193, 0, 45, 0.5);
+}
+
+/* ================================================================================== */
+/* Dark Mode Support */
+/* ================================================================================== */
+
+/* This will automatically detect if the user's OS is set to Dark Mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Swap variable values for dark theme */
+        --light: #222222;
+        --dark: #f4f4f4;
+        --card: #1e1e1e;
+        --border: var(--darkBorder);
+    }
+
+    /* Slightly dimming the images in dark mode to reduce eye strain */
+    img {
+        filter: brightness(0.85);
+    }
+}
