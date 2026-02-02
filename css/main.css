@@ -158,9 +158,7 @@ header a {
 .book-card h3 {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
-    display: -webkit-box;           /* This enables line clamping. This is necessary because some titles are too long for the card */
-    -webkit-box-orient: vertical;   /* Sets the box orientation to vertical */
-    -webkit-line-clamp: 2;          /* Limits title to 2 lines */
+    white-space: nowrap;            /* This prevents text from wrapping to the next line */
     overflow: hidden;               /* Hides overflowed text */
 }
 
