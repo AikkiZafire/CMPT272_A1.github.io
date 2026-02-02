@@ -90,7 +90,7 @@ header a {
 }
 
 /* Media Query to detect mobile devices screens (Tablets and smaller) */
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
     .menu-button {
         display: block;
         margin-left: auto;
@@ -160,7 +160,7 @@ header a {
     margin-bottom: 0.5rem;
     display: -webkit-box;           /* This enables line clamping. This is necessary because some titles are too long for the card */
     -webkit-box-orient: vertical;   /* Sets the box orientation to vertical */
-    line-clamp: 2;                  /* Limits title to 2 lines */
+    -webkit-line-clamp: 2;          /* Limits title to 2 lines */
     overflow: hidden;               /* Hides overflowed text */
 }
 
@@ -236,10 +236,8 @@ header a {
 /* Custom made keyframe animations for Slide up and fade in */
 @keyframes fadeInUp {
     to {
-        .see-more-btn {
-            transform: translateY(1.25rem);
-            opacity: 1;
-        }
+        transform: translateY(1.25rem);
+        opacity: 1;
     }
 }
 
